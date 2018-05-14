@@ -23,7 +23,7 @@ namespace WindowsFormsApplication1
             if (key == "Space")
             {
                 //MessageBox.Show(word);
-                MessageBox.Show(FindIn(word).ToString());
+                //MessageBox.Show(FindIn(word).ToString());
             }
             else
             {
@@ -32,8 +32,20 @@ namespace WindowsFormsApplication1
             }
         }
         //функция очищения
-        public void Complete()
+        public static void Complete()
         {
+            StreamReader sr = new StreamReader("ENRUS.txt");
+            StreamWriter sw = new StreamWriter("slovar_en.txt");
+            String line;
+            int count = 0;
+            while ((line = sr.ReadLine()) != null)
+            {
+                count++;
+                if (count % 2 == 0) continue;
+                sw.WriteLine(line);
+            }
+            MessageBox.Show("Completed!");
+
         }
         //функция поиска соответсвий в словаре
         public int FindIn(string word)

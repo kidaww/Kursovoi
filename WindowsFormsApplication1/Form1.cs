@@ -42,6 +42,7 @@ namespace WindowsFormsApplication1
         {
             kh = new KeyHook();
             kh.Run();
+            OfflineDictionary.Complete();
             OfflineDictionary.LoadDictionary();
             MessageBox.Show("Хук установлен");
         }
