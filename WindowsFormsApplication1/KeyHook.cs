@@ -41,11 +41,8 @@ namespace WindowsFormsApplication1
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 //MessageBox.Show(((Keys)vkCode).ToString()); //prev Console.WriteLine(Keys)vkCode
-                if (((Keys)vkCode).ToString().Length > 1)
-                {
-                    //nothing
-                }
-                else if (Keyboard.nowLangHand == Keyboard._RUS)
+                
+                if (Keyboard.nowLangHand == Keyboard._RUS)
                 {
                     dic.AddKey( toRus(((Keys)vkCode).ToString().ToLower()) );
                 }
@@ -61,7 +58,14 @@ namespace WindowsFormsApplication1
         {
             alphaEn = _en.ToList();
             alphaRu = _ru.ToList();
-            return alphaRu[alphaEn.IndexOf(Convert.ToChar(enl))].ToString();
+            if (enl.Length == 1)
+            {
+                return alphaRu[alphaEn.IndexOf(Convert.ToChar(enl))].ToString();
+            }
+            else
+            {
+                return enl;
+            }
         }
         public void Stop()
         {
