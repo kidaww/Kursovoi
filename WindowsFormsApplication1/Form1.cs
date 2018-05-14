@@ -19,11 +19,11 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
             
-            lLangHand.Text        = kb.nowLangHand.ToString(); //выводим текущий дескриптор 
+            lLangHand.Text        = Keyboard.nowLangHand.ToString(); //выводим текущий дескриптор 
             
             //заносим все в листбокс
             lbAllLangHand.Items.Add("All Lang Hand List: ");
-            foreach (var a in kb.allLangHandList)
+            foreach (var a in Keyboard.allLangHandList)
             {
                 lbAllLangHand.Items.Add("-> " + a);
             }
@@ -33,7 +33,7 @@ namespace WindowsFormsApplication1
         private void changeLangHand_Click(object sender, EventArgs e)
         {
             kb.ChangeKeyLayout();
-            lLangHand.Text = kb.nowLangHand.ToString();
+            lLangHand.Text = Keyboard.nowLangHand.ToString();
             OnlineDictionary onl = new OnlineDictionary();
             onl.ConnectToDictionary("123");
         }
@@ -42,7 +42,6 @@ namespace WindowsFormsApplication1
         {
             kh = new KeyHook();
             kh.Run();
-            OfflineDictionary.Complete();
             OfflineDictionary.LoadDictionary();
             MessageBox.Show("Хук установлен");
         }

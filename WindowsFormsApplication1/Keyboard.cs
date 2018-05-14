@@ -20,11 +20,11 @@ namespace WindowsFormsApplication1
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr ActivateKeyboardLayout(IntPtr hkl, uint Flags); //для смены раскладки, флаг для Reorder(1-0)
 
-        public  IntPtr   nowLangHand; //текущий дескриптор расскладки
-        public  IntPtr[] allLangHandList; //массив всех дескрипторов расскладки
+        public static  IntPtr   nowLangHand; //текущий дескриптор расскладки
+        public static  IntPtr[] allLangHandList; //массив всех дескрипторов расскладки
 
-        public  IntPtr _RUS = (IntPtr)68748313; //дескриптор русского
-        public  IntPtr _ENG = (IntPtr)67699721; //дескриптор английского
+        public static  IntPtr _RUS = (IntPtr)68748313; //дескриптор русского
+        public static IntPtr _ENG = (IntPtr)67699721; //дескриптор английского
 
         public Keyboard()
         {
