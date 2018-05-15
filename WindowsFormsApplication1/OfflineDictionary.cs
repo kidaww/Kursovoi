@@ -33,6 +33,9 @@ namespace WindowsFormsApplication1
             {
                 inputed = 0;
                 word = "";
+                /*KeyInput.tryBack();
+                KeyInput.tryBack();
+                KeyInput.tryBack();*/
                 //MessageBox.Show(word);
                 //MessageBox.Show(FindIn(word).ToString());
             }
@@ -108,11 +111,16 @@ namespace WindowsFormsApplication1
             }
             int count_ru = 0;
             int count_en = 0;
-            while ((line_ru = srRU.ReadLine()) != null && (line_en = srEN.ReadLine()) != null)
+            LoadDictionary();
+            while ((line_ru = srRU.ReadLine()) != null)
             {
                 if (line_ru.Contains(word_ru)) count_ru++;
+            }
+            while ((line_en = srEN.ReadLine()) != null)
+            {
                 if (line_en.Contains(word_en)) count_en++;
             }
+            
             return count_ru > count_en;
         }
         //функция загрузки словаря

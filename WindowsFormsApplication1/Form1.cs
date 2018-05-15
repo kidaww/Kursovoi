@@ -44,6 +44,7 @@ namespace WindowsFormsApplication1
             kh.Run();
             OfflineDictionary.LoadDictionary();
             MessageBox.Show("Хук установлен");
+            //KeyInput.play();
         }
         //снять хук
         private void bUnHook_Click(object sender, EventArgs e)
