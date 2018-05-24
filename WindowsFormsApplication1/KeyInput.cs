@@ -6,12 +6,73 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
     class KeyInput : Codes
     {
-        public static void tryBack()
+        static string _en = "qwertyuiop[]asdfghjkl;'zxcvbnm,.";
+        static string _ru = "йцукенгшщзхъфывапролджэячсмитьбю";
+        public static short getScanCodeByName(string name)
+        {
+            
+            //получаю значение enum по имени
+            ScanCodeShort elem = (ScanCodeShort)Enum.Parse(typeof(ScanCodeShort), name);
+            //return elem;
+            object val = Convert.ChangeType(elem, elem.GetTypeCode());
+            return (short)val;
+        }
+        public static short getVirtualKeyShortByName(string name)
+        {
+            //получаю значение enum по имени
+            VirtualKeyShort elem = (VirtualKeyShort)Enum.Parse(typeof(VirtualKeyShort), name);
+            //return elem;
+            object val = Convert.ChangeType(elem, elem.GetTypeCode());
+            return (short)val;
+        }
+        public static void InputWord(string word)
+        {
+            INPUT[] pInputs = new INPUT[word.Length];
+            //string[] array = new[] { word };
+            for (int i = 0; i < pInputs.Length; i++)
+            {
+                string temp = "";
+                switch (word[i].ToString())
+                {
+                    case ".":
+                        {
+                            temp = "OEM_PERIOD";
+                            break;
+                        }
+                    case ",":
+                        {
+                            temp = "OEM_COMMA";
+                            break;
+                        }
+                    case ";":
+                        {
+                            temp = "OEM_COMMA";
+                            break;
+                        }
+                    default:
+                        {
+                            temp = "KEY_" + word[i].ToString().ToUpper();
+                            break;
+                        }
+                }
+                pInputs[i] = new INPUT
+                {
+                    type = InputType.KEYBOARD,
+                    U = new InputUnion
+                    {
+                        ki = { wScan = (ScanCodeShort)getScanCodeByName(temp), wVk = (VirtualKeyShort)getVirtualKeyShortByName(temp) }
+                    }
+                };
+            }
+            tryInput(pInputs);
+        }
+        public static void deleteInputed(int count)
         {
             var pInputs = new[] {
                 new INPUT
@@ -32,16 +93,14 @@ namespace WindowsFormsApplication1
                 }
             };
 
+            for (int i = 0; i < count; i++)
+            {
+                tryInput(pInputs);
+            }
 
-            /*Process[] processes = Process.GetProcessesByName("notepad");
-
-            if (processes.Length == 0)
-                throw new Exception("Could not find the notepad process; is notepad running?");
-
-            IntPtr WindowHandle = processes[0].MainWindowHandle;
-            ForceForegroundWindow(WindowHandle);*/
-
-            //Thread.Sleep(2500);
+        }
+        public static void tryInput(INPUT[] pInputs)
+        {
             SendInput((uint)pInputs.Length, pInputs, INPUT.Size);
         }
 

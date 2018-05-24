@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,30 +32,93 @@ namespace WindowsFormsApplication1
             //MessageBox.Show(key);
             if (key == "space")
             {
+                //s
+                //Thread.Sleep(100);
+                if (FindIn(word, word.Length) && Keyboard.nowLangHand == Keyboard._ENG)
+                {
+                    //Thread.Sleep(100);
+                    string temp = word;
+                    KeyInput.deleteInputed(word.Length);
+                    KeyInput.InputWord(temp);
+                    kb.ChangeKeyLayout();
+                    //KeyInput.deleteInputed(inputed);
+                }
+                else if (!FindIn(word, word.Length) && Keyboard.nowLangHand == Keyboard._RUS)
+                {
+                    //Thread.Sleep(100);
+                    //Thread.Sleep(200);
+                    string temp = word;
+                    KeyInput.deleteInputed(word.Length);
+                    KeyInput.InputWord(toEng(temp));
+                    kb.ChangeKeyLayout();
+                }
+                //e
+                //KeyInput.InputWord(word);
                 inputed = 0;
                 word = "";
-                /*KeyInput.tryBack();
-                KeyInput.tryBack();
-                KeyInput.tryBack();*/
+                //KeyInput.deleteInputed(3);
                 //MessageBox.Show(word);
                 //MessageBox.Show(FindIn(word).ToString());
+
+                
             }
+           /* else if (key == "back")
+            {
+                word = word.Remove(word.Length - 1);
+            }*/
             else if (key.Length == 1)
             {
+                //KeyInput.getScanCodeByName("KEY_H");
                 word += key;
                 inputed++;
-                if (inputed == 3)
+                /*if (inputed == 3)
                 {
-                    if (FindIn(word) && Keyboard.nowLangHand == Keyboard._ENG)
+                    Thread.Sleep(300);
+                    if (FindIn(word, 3) && Keyboard.nowLangHand == Keyboard._ENG)
                     {
+                        
+                        KeyInput.deleteInputed(word.Length);
+                        KeyInput.InputWord(word);
+                        kb.ChangeKeyLayout();
+                        //KeyInput.deleteInputed(inputed);
+                    }
+                    else if (!FindIn(word, 3) && Keyboard.nowLangHand == Keyboard._RUS)
+                    {
+                        
+                        //Thread.Sleep(200);
+                        KeyInput.deleteInputed(word.Length);
+                        KeyInput.InputWord(toEng(word));
                         kb.ChangeKeyLayout();
                     }
-                    else if (!FindIn(word) && Keyboard.nowLangHand == Keyboard._RUS)
-                    {
-                        kb.ChangeKeyLayout();
-                    }
+                }*/
+                /*
+                KeyInput.deleteInputed(word.Length);
+
+                if (Keyboard.nowLangHand == Keyboard._RUS)
+                {
+                    KeyInput.InputWord(toRus(word));
                 }
-                //MessageBox.Show("" + "w:" + word + ",k:" + key); 
+                else if (Keyboard.nowLangHand == Keyboard._ENG)
+                {
+                    KeyInput.InputWord(toEng(word));
+                }
+                //MessageBox.Show("" + "w:" + word + ",k:" + key);*/ 
+            } 
+            else
+            {
+                switch(key)
+                {
+                    case "oemperiod":
+                        {
+                            word += ".";
+                            break;
+                        }
+                    case "oemcomma":
+                        {
+                            word += ",";
+                            break;
+                        }
+                }
             }
         }
         /*
@@ -81,7 +145,7 @@ namespace WindowsFormsApplication1
             foreach (var a in enl)
             {
                 list += alphaRu[alphaEn.IndexOf(Convert.ToChar(a))].ToString();
-            }
+              }
             return list;
         }
         public static String toEng(string enl)
@@ -96,7 +160,7 @@ namespace WindowsFormsApplication1
             return list;
         }
         //функция поиска соответсвий в словаре
-        public bool FindIn(string word)
+        public bool FindIn(string word, int len)
         {
             String line_ru, line_en, word_ru, word_en;
             if (Keyboard.nowLangHand == Keyboard._ENG)
@@ -114,13 +178,19 @@ namespace WindowsFormsApplication1
             LoadDictionary();
             while ((line_ru = srRU.ReadLine()) != null)
             {
-                if (line_ru.Contains(word_ru)) count_ru++;
+                //MessageBox.Show(line_ru.Substring(0, len));
+                if (line_ru.Length < len) continue;
+                if (line_ru == word_ru) count_ru++;
             }
             while ((line_en = srEN.ReadLine()) != null)
             {
-                if (line_en.Contains(word_en)) count_en++;
+                if (line_en.Length < len) continue;
+                if (line_en == word_en) count_en++;
             }
-            
+
+            /*MessageBox.Show(word_ru + "<- " + count_ru + "; " + word_en + "<- " + count_en);
+            MessageBox.Show(word_ru + "<- " + count_ru + "; " + word_en + "<- " + count_en);
+            MessageBox.Show(word_ru + "<- " + count_ru + "; " + word_en + "<- " + count_en);*/
             return count_ru > count_en;
         }
         //функция загрузки словаря

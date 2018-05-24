@@ -33,7 +33,7 @@ namespace WindowsFormsApplication1
             allLangHandList = new IntPtr[allLangHandCount]; //массив дескрипторов
 
             GetKeyboardLayoutList(allLangHandList.Length, allLangHandList); //Заполнение массива дескрипторами
-            if (allLangHandCount > 2) MessageBox.Show("В вашей системе установлено более двух языков. Программа поддерживает только руссский и английский!");
+            //if (allLangHandCount > 2) MessageBox.Show("В вашей системе установлено более двух языков. Программа поддерживает только руссский и английский!");
         }
         //смена языков, если их всего два
         public void ChangeKeyLayout()

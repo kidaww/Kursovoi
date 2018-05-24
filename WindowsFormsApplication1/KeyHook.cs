@@ -44,6 +44,7 @@ namespace WindowsFormsApplication1
                 
                 if (Keyboard.nowLangHand == Keyboard._RUS)
                 {
+                    //MessageBox.Show(((Keys)vkCode).ToString());
                     dic.AddKey( toRus(((Keys)vkCode).ToString().ToLower()) );
                 }
                 else

@@ -16,3 +16,4 @@ C:\Users\Admin\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\Deb
 C:\Users\Admin\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Form1.resources
 C:\Users\Admin\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
 C:\Users\Admin\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\Admin\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\MaterialSkin.dll
